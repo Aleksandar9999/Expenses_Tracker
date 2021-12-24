@@ -9,11 +9,6 @@ class TransactionList extends StatelessWidget {
 
   firstDate(dateTime) {
     lastDateTime = dateTime;
-    return ListTile(
-        title: Text(
-      "Today",
-      style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
-    ));
   }
 
   @override
@@ -26,17 +21,9 @@ class TransactionList extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (lastDateTime == null)
-                  firstDate(transactions[index].timestamp),
-                if (lastDateTime != null &&
-                    lastDateTime.day != transactions[index].timestamp.day)
-                  ListTile(
-                      title: Text(
-                          DateFormat('dd MMM')
-                              .format(transactions[index].timestamp),
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w600))),
+                /*if (lastDateTime == null)
+                  firstDate(transactions[index].timestamp),*/
+                chackNewDate(transactions[index].timestamp),
                 ListTile(
                   leading: Container(
                     height: 60,
@@ -72,5 +59,23 @@ class TransactionList extends StatelessWidget {
             ),
           );
         });
+  }
+
+  chackNewDate(DateTime timestamp) {
+    /*if (lastDateTime == null) lastDateTime = timestamp;*/
+    var dateFormater = new DateFormat('YYYY-MMM-DDD');
+    if (dateFormater.format(timestamp) == dateFormater.format(DateTime.now())) {
+      return ListTile(
+          title: Text(
+        "Today",
+        style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600),
+      ));
+    } else {
+      return ListTile(
+          title: Text(DateFormat('dd MMM').format(timestamp),
+              style:
+                  TextStyle(color: Colors.grey, fontWeight: FontWeight.w600)));
+    }
+    //return Text("");
   }
 }

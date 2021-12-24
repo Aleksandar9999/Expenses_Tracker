@@ -12,7 +12,7 @@ class TransactionsDao {
 
   initDB() async {
     var databasesPath = await getDatabasesPath();
-    String path = databasesPath + '/transactions2.db';
+    String path = databasesPath + '/transactions222.db';
     //await deleteDatabase(path);
     return await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
@@ -30,7 +30,8 @@ class TransactionsDao {
 
   Future<List<TransactionExp>> getAll() async {
     await database;
-    List<Map> list = await _database.rawQuery('SELECT * FROM Transactions');
+    List<Map> list = await _database
+        .rawQuery('SELECT * FROM Transactions ORDER BY timestamp DESC');
 
     return list.map((item) {
       return TransactionExp(
